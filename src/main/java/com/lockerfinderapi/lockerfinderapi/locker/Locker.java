@@ -1,8 +1,21 @@
 package com.lockerfinderapi.lockerfinderapi.locker;
 
+
+import javax.persistence.*;
+
+@Entity(name = "locker")
+@Table
 public class Locker {
 //    id, name, description, city, state, country, quantity,
+    @Id
+    @SequenceGenerator(name = "locker_sequence", sequenceName = "locker_sequence", allocationSize = 1)
+
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "locker_sequence")
+
+
+    @Column(name = "id", updatable = false)
     private Long id;
+    private String name;
     private String description;
     private String city;
     private String state;
@@ -10,7 +23,6 @@ public class Locker {
     private int quantity;
 
     public Locker(){
-
     }
 
     @Override
@@ -21,27 +33,37 @@ public class Locker {
                 ", city='" + city + '\'' +
                 ", state='" + state + '\'' +
                 ", country='" + country + '\'' +
+                ", name='" + name + '\'' +
                 ", quantity=" + quantity +
                 '}';
     }
 
-    public Locker(String description, String city, String state, String country, int quantity) {
+    public Locker(String name, String description, String city, String state, String country, int quantity) {
         this.description = description;
         this.city = city;
         this.state = state;
         this.country = country;
         this.quantity = quantity;
+        this.name = name;
     }
 
-    public Locker(Long id, String description, String city, String state, String country, int quantity) {
+    public Locker(Long id,String name, String description, String city, String state, String country, int quantity) {
         this.id = id;
         this.description = description;
         this.city = city;
         this.state = state;
         this.country = country;
         this.quantity = quantity;
+        this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getDescription() {
         return description;

@@ -1,17 +1,35 @@
 package com.lockerfinderapi.lockerfinderapi.locker;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/v1/locker")
 public class LockerController {
+private final LockerService lockerService;
+
+@Autowired
+    public LockerController(LockerService lockerService) {
+        this.lockerService = lockerService;
+    }
 
     @GetMapping
     public List<Locker> getLockers(){
-        return List.of(new Locker("A lovely fresh locker", "ipaja", "lagos", "Nigeria", 1));
+        return lockerService.getLockers();
     }
+
+    @PostMapping()
+    public void addNewLocker(@RequestBody Locker locker){
+
+    lockerService.addNewLocker(locker);
+    }
+
+    @GetMapping(path = "search")
+    public List<Locker> findCityState(@RequestParam(required = false) String value){
+        return lockerService.getCityState(value);
+    }
+
 }
