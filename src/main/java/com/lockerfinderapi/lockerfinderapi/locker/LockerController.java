@@ -4,10 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping(path = "api/v1/locker")
+@CrossOrigin(origins = "http://localhost:3000")
 public class LockerController {
 private final LockerService lockerService;
 
@@ -29,7 +30,7 @@ private final LockerService lockerService;
 
     @GetMapping(path = "search")
     public List<Locker> findCityState(@RequestParam(required = false) String value){
-        return lockerService.getCityState(value);
+        return lockerService.getCityState(value+"%");
     }
 
 }
